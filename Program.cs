@@ -1,5 +1,6 @@
 using E_Learning.Data;
 using E_Learning.Models;
+using E_Learning.Seeds;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,5 +43,19 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+
+// Seeding data
+var scope = app.Services.CreateScope();
+var serviceProvider = scope.ServiceProvider;
+try
+{
+    await SeedRolesData.SeedAsync(serviceProvider);
+    await SeedUsersData.SeedAsync(serviceProvider);
+} catch (Exception e)
+{
+    var logger = serviceProvider.GetRequiredService<ILogger>();
+    logger.LogError(e, "An error occured when trying to seed database.");
+}
 
 app.Run();

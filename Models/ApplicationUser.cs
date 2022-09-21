@@ -6,7 +6,7 @@ namespace E_Learning.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        [DefaultValue(0.0)]
-        public double? Wallet { get; set; }
+        [Required]
+        public double? Wallet { get; set; } = 0.0;
     }
 }
