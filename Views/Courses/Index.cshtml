@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<E_Learning.Models.Course>
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "المسارات";
+}
+
+<h1>المسارات</h1>
+
+<p>
+    @if ((bool)ViewData["IsTeacher"])
+    {
+        <a asp-action="Create">إنشاء مسار جديد</a>
+    }
+</p>
+
+<section class="container row row-cols-3">
+    @foreach (var course in Model) {
+        <div class="card">
+            <h2 class="text-center">@course.Title</h2>
+            <div class="card-body">
+                <div class="card-text">
+                    <p>
+                        @course.Description
+                    </p>
+                    <p>
+                        المعلم: @course.Teacher.NormalizedEmail
+                    </p>
+                    <p>
+                        السعر: @course.Price
+                    </p>
+                </div>
+                <a class="btn btn-primary" asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">التفاصيل</a>
+            </div>
+        </div>
+    }
+</section>

@@ -1,0 +1,37 @@
+﻿@model E_Learning.Models.Course
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف المسار</h1>
+
+<h3>هل انت متاكد انك تريد مسح المسار؟</h3>
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            العنوان
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            الوصف
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            السعر
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+        <a class="btn btn-primary" asp-action="Index">العودةt</a>
+    </form>
+</div>
