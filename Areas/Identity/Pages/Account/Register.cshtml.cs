@@ -100,7 +100,7 @@ namespace E_Learning.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "كلمة السر وإعادة كلمة السر ليسوا متطابقان.")]
             public string ConfirmPassword { get; set; }
         }
 

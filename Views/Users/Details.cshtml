@@ -2,14 +2,14 @@
 @using Microsoft.AspNetCore.Identity
 
 @{
-    ViewData["Title"] = "User Details";
+    ViewData["Title"] = "تفاصيل المستخدم";
 }
 
 <h1>User</h1>
 
 @if (ViewBag.Succeeded != null && ViewBag.Succeeded) {
     <div class="alert alert-success" role="alert">
-        Updated user successfully!
+        تم تحديث المستخدم بنجاح!
     </div>
 }
 
@@ -17,22 +17,22 @@
     <table class="table">
         <tbody>
                 <tr>
-                    <td>Username:</td>
+                    <td>اسم المستخدم:</td>
                     <td>@Model.UserName</td>
                 </tr>
                 <tr>
-                    <td>Email:</td>
+                    <td>البريد الإلكتروني:</td>
                     <td>@Model.Email</td>
                 </tr>
                 <tr>
-                    <td>Wallet:</td>
+                    <td>المحفظة:</td>
                     <td>@Model.Wallet</td>
                 </tr>
                 <tr>
-                    <td>Role:</td>
+                    <td>الدور:</td>
                     <td><select name="rolesIds" class="form-control" asp-items="ViewBag.Roles" multiple></select></td>
                 </tr>
         </tbody>
     </table>
-    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
 </form>

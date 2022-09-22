@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using E_Learning.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using E_Learning.ViewModels;
 
 namespace E_Learning.Controllers
 {
@@ -25,7 +26,20 @@ namespace E_Learning.Controllers
                 .Users
                 .Where(user => user.Id != currentUser.Id)
                 .ToListAsync();
-            return View(users);
+
+            List<UserViewModel> usersModels = new();
+
+            foreach (var user in users)
+            {
+                usersModels.Add(new UserViewModel()
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    Roles = await _userManager.GetRolesAsync(user),
+                });
+            }
+
+            return View(usersModels);
         }
 
         public async Task<IActionResult> Details(string Id)
