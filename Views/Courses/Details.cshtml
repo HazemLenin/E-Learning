@@ -1,0 +1,42 @@
+﻿@model E_Learning.Models.Course
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "التفاصيل";
+}
+
+<h1>التفاصيل</h1>
+
+<div>
+    <h4>@Html.DisplayFor(model => model.Title)</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            الوصف
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            السعر
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            المعلم
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Teacher.NormalizedEmail)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-primary" asp-action="Index">العودة</a>
+    @if ((bool)ViewData["CanEditCourse"]) {
+        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.Id">تعديل</a> 
+        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model?.Id">حذف</a> 
+    }
+</div>

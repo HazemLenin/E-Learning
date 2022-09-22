@@ -8,5 +8,6 @@ namespace E_Learning.Models
     {
         [Required]
         public double? Wallet { get; set; } = 0.0;
+        public virtual IEnumerable<Course> Courses { get; set; }
     }
 }
