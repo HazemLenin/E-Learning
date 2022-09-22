@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "الحافظة";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<section class="row justify-content-center">
+    <div class="card w-50 text-center">
+        <div class="card-body">
+            <h2>
+                يوجد لديك:<br />
+                @ViewData["WalletValue"]
+            </h2>
+            @if (User.IsInRole("Student"))
+            {
+                <div class="row">
+                    <a class="btn btn-success" asp-controller="Wallet" asp-action="Charge">إضافة 100</a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
