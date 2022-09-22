@@ -1,23 +1,26 @@
-﻿@model List<ApplicationUser>
+﻿@using E_Learning.ViewModels
+@model List<UserViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "المستخدمين";
 }
 
-<h1>Users</h1>
+<h1>المستخدمين</h1>
 
 <table class="table table-striped">
     <thead>
         <tr>
             <th>#</th>
-            <th>Email</th>
+            <th>البريد الإلكتروني</th>
+            <th>الدور</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Select((user, index) => new {user, index})) {
             <tr>
-                <th>@item.index</th>
+                <th>@(item.index + 1)</th>
                 <th><a asp-controller="Users" asp-action="Details" asp-route-id="@item.user.Id">@item.user.Email</a></th>
+                <th>@string.Join(" - ", item.user.Roles)</th>
             </tr>
         }
     </tbody>
