@@ -87,6 +87,13 @@ namespace E_Learning.Controllers
                 .FirstOrDefaultAsync(m => m.Id == CourseId);
             ViewBag.Course = course;
             var currentUser = await _userManager.GetUserAsync(User);
+
+            // Check if user already enrolled this course
+            if (PurchasedCourse(currentUser.Id, course.Id))
+            {
+                return Forbid();
+            }
+
             ViewBag.StudentId = currentUser.Id;
             return View();
         }
@@ -104,6 +111,13 @@ namespace E_Learning.Controllers
                 .Include(e => e.Teacher)
                 .FirstOrDefaultAsync(m => m.Id == CourseId);
             var currentUser = await _userManager.GetUserAsync(User);
+            
+            // Check if user already enrolled this course
+            if (PurchasedCourse(currentUser.Id, course.Id))
+            {
+                return Forbid();
+            }
+
             ViewBag.StudentId = currentUser.Id;
             if (ModelState.IsValid)
             {
@@ -213,7 +227,7 @@ namespace E_Learning.Controllers
         //    {
         //        _context.Enrollment.Remove(enrollment);
         //    }
-            
+
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}
@@ -221,6 +235,13 @@ namespace E_Learning.Controllers
         private bool EnrollmentExists(int id)
         {
           return _context.Enrollment.Any(e => e.Id == id);
+        }
+
+        private bool PurchasedCourse(string userdId, int courseId)
+        {
+            return _context.Enrollment.Where(
+                        e => e.StudentId == userdId && e.CourseId == courseId
+                    ).Count() > 0;
         }
     }
 }

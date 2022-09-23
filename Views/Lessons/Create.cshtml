@@ -1,10 +1,10 @@
-﻿@model E_Learning.Models.Course
+﻿@model E_Learning.Models.Lesson
 
 @{
-    ViewData["Title"] = "إنشاء مسار جديد";
+    ViewData["Title"] = "إضافة درس";
 }
 
-<h1>إنشاء مسار جديد</h1>
+<h1>@ViewData["Title"]</h1>
 
 <hr />
 <div class="row">
@@ -17,29 +17,25 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Video" class="control-label">الفيديو</label>
+                <input asp-for="Video" class="form-control" />
+                <span asp-validation-for="Video" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Description" class="control-label">الوصف</label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="CourseId" value="@ViewData["CourseId"]" />
             <div class="form-group">
-                <label asp-for="Price" class="control-label">السعر</label>
-                <input asp-for="Price" class="form-control" type="number"/>
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-                <label asp-for="TeacherId" class="control-label"></label>
-                <select asp-for="TeacherId" class ="form-control" asp-items="ViewBag.TeacherId"></select>
-            </div>*@
-            <input type="hidden" asp-for="TeacherId" value="@ViewData["CurrentUserId"]" />
-            <div class="form-group">
-                <input type="submit" value="إنشاء" class="btn btn-primary" />
+                <input type="submit" value="إضافة" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a class="btn btn-primary" asp-action="Index">العودة</a>
+    <a class="btn btn-primary" asp-controller="Courses" asp-action="Details" asp-route-Id="@ViewData["CourseId"]">العودة</a>
 </div>
 
 @section Scripts {

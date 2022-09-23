@@ -19,44 +19,67 @@
 <div>
     <h4>@Html.DisplayFor(model => model.Title)</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            تم شراؤه
-        </dt>
-        <dd class="col-sm-10">
-            @if ((bool)ViewData["Purchased"]) {
-                <span>نعم</span>
-            } else {
-                <span>لا</span>
-            }
-        </dd>
+    <div class="row row-cols-auto">
+        <div class="col">
+            <dl class="row">
+                @if(User.IsInRole("Student")) {
+                    <dt class="col-sm-2">
+                        تم شراؤه
+                    </dt>
+                    <dd class="col-sm-10">
+                        @if ((bool)ViewData["Purchased"])
+                        {
+                            <span>نعم</span>
+                        }
+                        else
+                        {
+                            <span>لا</span>
+                        }
+                    </dd>
+                }
         
-        <dt class = "col-sm-2">
-            الوصف
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            السعر
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            المعلم
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Teacher.UserName)
-        </dd>
-    </dl>
+                <dt class = "col-sm-2">
+                    الوصف
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class = "col-sm-2">
+                    السعر
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+                <dt class = "col-sm-2">
+                    المعلم
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Teacher.UserName)
+                </dd>
+            </dl>
+        </div>
+        @if (((bool)ViewData["Purchased"] || (bool)ViewData["IsCourseOwner"]))
+        {
+            <ul class="list-group">
+                @foreach (var lesson in Model.Lessons)
+                {
+                    <li class="list-group-item">
+                        <a href="/Courses/@Model.Id/Lessons/Details/@lesson.Id">
+                            @lesson.Title
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
 </div>
 <div>
     <a class="btn btn-primary" asp-action="Index">العودة</a>
-    @if ((bool)ViewData["CanEditCourse"]) {
+    @if ((bool)ViewData["IsCourseOwner"]) {
         <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.Id">تعديل</a> 
         <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model?.Id">حذف</a>
         <a class="btn btn-warning" href="/Courses/@Model?.Id/Enrollments">رؤية عمليات الشراء</a>
+        <a class="btn btn-success" href="/Courses/@Model?.Id/Lessons/Create">إضافة درس</a>
     }
     @if (!(bool)ViewData["Purchased"] && User.IsInRole("Student")) {
         <a class="btn btn-success" href="/Courses/@Model?.Id/Enrollments/Create">شراء</a>

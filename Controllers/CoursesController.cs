@@ -55,19 +55,14 @@ namespace E_Learning.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Course.FindAsync(id);
-
-            ViewData["TeacherUserName"] = (await _userManager.FindByIdAsync(course.TeacherId)).NormalizedUserName;
+            var currentUser = await _userManager.GetUserAsync(User);
+            var course = await _context.Course.Include(c => c.Lessons).FirstOrDefaultAsync(c => c.Id == id);
 
             // Check if user is the owner
-            var currentUser = await _userManager.GetUserAsync(User);
 
-            ViewData["CanEditCourse"] = currentUser != null && course.TeacherId == currentUser.Id;
+            ViewData["IsCourseOwner"] = currentUser != null && course.TeacherId == currentUser.Id;
 
-            ViewData["Purchased"] = currentUser != null &&
-                    _context.Enrollment.Where(
-                        e => e.StudentId == currentUser.Id && e.CourseId == course.Id
-                    ).Count() > 0;
+            ViewData["Purchased"] = currentUser != null && PurchasedCourse(currentUser.Id, course.Id);
 
             if (course == null)
             {
@@ -225,15 +220,16 @@ namespace E_Learning.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Roles = "Student")]
-        public async Task<IActionResult> MyCourses()
-        {
-            return View();
-        }
-
         private bool CourseExists(int id)
         {
           return _context.Course.Any(e => e.Id == id);
+        }
+
+        private bool PurchasedCourse(string userdId, int courseId)
+        {
+            return _context.Enrollment.Where(
+                        e => e.StudentId == userdId && e.CourseId == courseId
+                    ).Count() > 0;
         }
     }
 }

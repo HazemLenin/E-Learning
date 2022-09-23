@@ -9,5 +9,6 @@
         public string TeacherId { get; set; }
         public virtual ApplicationUser? Teacher { get; set; }
         public virtual IEnumerable<Enrollment>? Enrollments { get; set; }
+        public virtual IEnumerable<Lesson>? Lessons { get; set; }
     }
 }
