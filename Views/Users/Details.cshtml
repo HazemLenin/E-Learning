@@ -5,13 +5,14 @@
     ViewData["Title"] = "تفاصيل المستخدم";
 }
 
-<h1>User</h1>
 
-@if (ViewBag.Succeeded != null && ViewBag.Succeeded) {
+@if (TempData["SuccessMessage"] != null) {
     <div class="alert alert-success" role="alert">
-        تم تحديث المستخدم بنجاح!
+        @TempData["SuccessMessage"]
     </div>
 }
+
+<h1>تفاصيل المستخدم</h1>
 
 <form method="post" asp-controller="Users" asp-action="Details" asp-route-id="@Model.Id">
     <table class="table">

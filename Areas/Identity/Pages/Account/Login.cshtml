@@ -82,19 +82,20 @@
     let teacherBtn = document.getElementById("teacher-btn");
     let emailField = document.getElementById("Input_Email");
     let passwordField = document.getElementById("Input_Password");
+    let password = "Hello%world1";
 
     adminBtn.onclick = () => {
             emailField.value = "admin@example.com";
-            passwordField.value = "Hello%world1";
+            passwordField.value = password;
     };
 
     studentBtn.onclick = () => {
         emailField.value = "student@example.com";
-        passwordField.value = "Hello%world1";
+        passwordField.value = password;
     };
 
     teacherBtn.onclick = () => {
         emailField.value = "teacher@example.com";
-        passwordField.value = "Hello%world1";
+        passwordField.value = password;
     };
 </script>

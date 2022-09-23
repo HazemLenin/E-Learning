@@ -11,5 +11,6 @@ namespace E_Learning.Data
         {
         }
         public DbSet<E_Learning.Models.Course>? Course { get; set; }
+        public DbSet<E_Learning.Models.Enrollment>? Enrollment { get; set; }
     }
 }

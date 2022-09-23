@@ -3,10 +3,10 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-    ViewData["Title"] = "المسارات";
+    ViewData["Title"] = User.IsInRole("Teacher") ? "مساراتك" : "المسارات";
 }
 
-<h1>المسارات</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
     @if ((bool)ViewData["IsTeacher"])
@@ -25,7 +25,7 @@
                         @course.Description
                     </p>
                     <p>
-                        المعلم: @course.Teacher.NormalizedEmail
+                        المعلم: @course.Teacher.UserName
                     </p>
                     <p>
                         السعر: @course.Price
