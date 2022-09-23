@@ -1,0 +1,32 @@
+﻿@model IEnumerable<E_Learning.Models.Enrollment>
+
+@{
+    ViewData["Title"] = "عمليات الشراء";
+}
+
+<h1>@ViewData["Title"]</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                الطالب
+            </th>
+            <th>
+                التكلفة
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Student.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

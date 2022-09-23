@@ -7,12 +7,30 @@
     ViewData["Title"] = "التفاصيل";
 }
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
 <h1>التفاصيل</h1>
 
 <div>
     <h4>@Html.DisplayFor(model => model.Title)</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            تم شراؤه
+        </dt>
+        <dd class="col-sm-10">
+            @if ((bool)ViewData["Purchased"]) {
+                <span>نعم</span>
+            } else {
+                <span>لا</span>
+            }
+        </dd>
+        
         <dt class = "col-sm-2">
             الوصف
         </dt>
@@ -29,7 +47,7 @@
             المعلم
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Teacher.NormalizedEmail)
+            @Html.DisplayFor(model => model.Teacher.UserName)
         </dd>
     </dl>
 </div>
@@ -37,6 +55,10 @@
     <a class="btn btn-primary" asp-action="Index">العودة</a>
     @if ((bool)ViewData["CanEditCourse"]) {
         <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model?.Id">تعديل</a> 
-        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model?.Id">حذف</a> 
+        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model?.Id">حذف</a>
+        <a class="btn btn-warning" href="/Courses/@Model?.Id/Enrollments">رؤية عمليات الشراء</a>
+    }
+    @if (!(bool)ViewData["Purchased"] && User.IsInRole("Student")) {
+        <a class="btn btn-success" href="/Courses/@Model?.Id/Enrollments/Create">شراء</a>
     }
 </div>

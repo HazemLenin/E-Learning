@@ -16,7 +16,7 @@ namespace E_Learning.Seeds
 
             logger.LogInformation("Seeding users data...");
             
-            foreach (string role in roles)
+            foreach(var role in roles)
             {
                 string email = $"{role.ToLower()}@example.com";
                 string password = "Hello%world1";

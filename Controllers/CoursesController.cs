@@ -33,6 +33,10 @@ namespace E_Learning.Controllers
             if (_signInManager.IsSignedIn(User))
             {
                 var currentUser = await _userManager.GetUserAsync(User);
+                if (await _userManager.IsInRoleAsync(currentUser, "Teacher"))
+                {
+                    courses = _context.Course.Include(c => c.Teacher).Where(c => c.TeacherId == currentUser.Id).ToList();
+                }
                 ViewData["IsTeacher"] = await _userManager.IsInRoleAsync(currentUser, "Teacher");
             }
             else
@@ -59,6 +63,11 @@ namespace E_Learning.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
 
             ViewData["CanEditCourse"] = currentUser != null && course.TeacherId == currentUser.Id;
+
+            ViewData["Purchased"] = currentUser != null &&
+                    _context.Enrollment.Where(
+                        e => e.StudentId == currentUser.Id && e.CourseId == course.Id
+                    ).Count() > 0;
 
             if (course == null)
             {
@@ -214,6 +223,12 @@ namespace E_Learning.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> MyCourses()
+        {
+            return View();
         }
 
         private bool CourseExists(int id)

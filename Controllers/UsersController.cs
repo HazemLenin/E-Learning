@@ -94,7 +94,7 @@ namespace E_Learning.Controllers
                 selectedRoles
             );
 
-            ViewBag.Succeeded = true;
+            TempData["SuccessMessage"] = "تم تحديث المستخدم بنجاح!";
             var roles = _roleManager.Roles;
             var userRoles = await _userManager.GetRolesAsync(user);
             List<SelectListItem> selectListItems = new();
