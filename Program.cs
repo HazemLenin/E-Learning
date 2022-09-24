@@ -9,11 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-var posgresqlConnectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
+var posgresqlConnectionString = "Server=ec2-54-76-43-89.eu-west-1.compute.amazonaws.com;Port=5432;Database=d7nn22fis6a2bi;User Id=avnuwglcsqcjjj;Password=c77a976f5a572a5cee76b2ebfeaec09cebc4768818fb6bd20408a16d9a184c34;Integrated Security=true;";
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    // options.UseSqlServer(connectionString)
-    options.UseNpgsql(connectionString));
+    //options.UseSqlServer(connectionString)
+    options.UseNpgsql(posgresqlConnectionString)
+);
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -59,8 +60,10 @@ try
     await SeedUsersData.SeedAsync(serviceProvider);
 } catch (Exception e)
 {
-    var logger = serviceProvider.GetRequiredService<ILogger>();
-    logger.LogError(e, "An error occured when trying to seed database.");
+    // var logger = serviceProvider.GetRequiredService<ILogger>();
+    // logger.LogError(e, "An error occured when trying to seed database.");
+    Console.WriteLine("An error occured when trying to seed database.");
+    Console.WriteLine(e);
 }
 
 app.Run();
