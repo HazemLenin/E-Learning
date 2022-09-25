@@ -30,18 +30,14 @@ namespace E_Learning.Controllers
         {
             var courses = _context.Course.Include(c => c.Teacher).ToList();
 
-            if (_signInManager.IsSignedIn(User))
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser != null)
             {
-                var currentUser = await _userManager.GetUserAsync(User);
-                if (await _userManager.IsInRoleAsync(currentUser, "Teacher"))
+
+                if (User.IsInRole("Teacher"))
                 {
                     courses = _context.Course.Include(c => c.Teacher).Where(c => c.TeacherId == currentUser.Id).ToList();
                 }
-                ViewData["IsTeacher"] = await _userManager.IsInRoleAsync(currentUser, "Teacher");
-            }
-            else
-            {
-                ViewData["IsTeacher"] = false;
             }
 
             return View(courses);

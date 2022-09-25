@@ -9,7 +9,7 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>
-    @if ((bool)ViewData["IsTeacher"])
+    @if (User.IsInRole("Teacher"))
     {
         <a asp-action="Create">إنشاء مسار جديد</a>
     }
