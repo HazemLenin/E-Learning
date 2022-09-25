@@ -9,11 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-var posgresqlConnectionString = "Server=ec2-54-76-43-89.eu-west-1.compute.amazonaws.com;Port=5432;Database=d7nn22fis6a2bi;User Id=avnuwglcsqcjjj;Password=c77a976f5a572a5cee76b2ebfeaec09cebc4768818fb6bd20408a16d9a184c34;Integrated Security=true;";
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    //options.UseNpgsql(posgresqlConnectionString)
     //options.UseSqlServer(connectionString)
-    options.UseNpgsql(posgresqlConnectionString)
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyASPConnection"))
 );
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
